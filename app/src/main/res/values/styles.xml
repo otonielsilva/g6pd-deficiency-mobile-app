@@ -8,6 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="theme">@style/MyToolbarTheme</item>
+    </style>
+
+    <style name="MyToolbarTheme">
+        <!-- Used to tint the back arrow, menu and spinner arrow -->
+        <item name="colorControlNormal">#fff</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.otoniel.g6pd.g6pddeficiencyapp.MainActivityFragment"
-    tools:showIn="@layout/activity_main">
+    tools:context="com.otoniel.g6pd.g6pddeficiencyapp.mainListing.MainListingFragment"
+    tools:showIn="@layout/activity_main_listing">
 
     <TextView
         android:layout_width="wrap_content"

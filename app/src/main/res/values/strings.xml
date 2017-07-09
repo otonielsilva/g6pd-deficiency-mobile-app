@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">G6PD deficiency App</string>
     <string name="action_settings">Settings</string>
+    <string name="restrictions_toolbar_name">New food restriction</string>
+    <string name="field_required_message">The field %s is required</string>
+    <string name="unexpected_error_message">Something went wrong</string>
 </resources>

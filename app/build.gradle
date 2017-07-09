@@ -1,15 +1,24 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "com.otoniel.g6pd.g6pddeficiencyapp"
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdkVersion 15
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+    }
+    dataBinding {
+        enabled true
+    }
+    lintOptions {
+        abortOnError false
     }
     buildTypes {
         release {
@@ -20,12 +29,47 @@ android {
 }
 
 dependencies {
+
+    final supportLibraryVersion = '25.0.1'
+    final picassoVersion = '2.5.2'
+    final langVersion = '3.5'
+    final daggerVersion = '2.0.2'
+    final rxAndroidVersion = '1.2.1'
+    final rxJavaVersion = '1.1.6'
+    final annotationVersion = '1.0'
+    final realmVersion = '0.83.0+'
+    final retrofitVersion = '2.0.2'
+    final converterVersion = '2.0.0'
+    final loggingInterceptorVersion = '3.2.0'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    compile "com.android.support:cardview-v7:${supportLibraryVersion}"
+    compile "com.android.support:design:${supportLibraryVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+    compile "com.android.support:support-v4:${supportLibraryVersion}"
+
+    compile "io.realm:realm-android:${realmVersion}"
+    compile "com.squareup.picasso:picasso:${picassoVersion}"
+    compile "org.apache.commons:commons-lang3:${langVersion}"
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    compile "javax.annotation:jsr250-api:${annotationVersion}"
+    compile "io.reactivex:rxandroid:${rxAndroidVersion}"
+    compile "io.reactivex:rxjava:${rxJavaVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${converterVersion}"
+    compile "com.squareup.okhttp3:logging-interceptor:${loggingInterceptorVersion}"
+    provided "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    compile 'com.jakewharton:butterknife:6.1.0'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
+}
+repositories {
+    mavenCentral()
 }
