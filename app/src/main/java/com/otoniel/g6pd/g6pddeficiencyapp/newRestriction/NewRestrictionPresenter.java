@@ -2,8 +2,8 @@ package com.otoniel.g6pd.g6pddeficiencyapp.newRestriction;
 
 import com.otoniel.g6pd.g6pddeficiencyapp.common.BasePresenter;
 import com.otoniel.g6pd.g6pddeficiencyapp.data.exception.InvalidFormException;
+import com.otoniel.g6pd.g6pddeficiencyapp.data.repository.AlimentsRepository;
 import com.otoniel.g6pd.g6pddeficiencyapp.data.repository.AlimentsRepository.SaveAlimentsCallback;
-import com.otoniel.g6pd.g6pddeficiencyapp.data.repository.AlimentsRepositoryImpl;
 
 import javax.inject.Inject;
 
@@ -16,12 +16,12 @@ import rx.subscriptions.CompositeSubscription;
 public class NewRestrictionPresenter extends BasePresenter<NewRestrictionContract.View>
     implements NewRestrictionContract.Presenter {
 
-    private AlimentsRepositoryImpl mRepository;
+    private AlimentsRepository mRepository;
 
     private CompositeSubscription mSubscriptions;
 
     @Inject
-    public NewRestrictionPresenter(AlimentsRepositoryImpl repository) {
+    public NewRestrictionPresenter(AlimentsRepository repository) {
         this.mRepository = repository;
         this.mSubscriptions = new CompositeSubscription();
     }

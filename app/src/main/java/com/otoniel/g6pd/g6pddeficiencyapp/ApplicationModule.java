@@ -1,5 +1,6 @@
 package com.otoniel.g6pd.g6pddeficiencyapp;
 
+import com.otoniel.g6pd.g6pddeficiencyapp.data.repository.AlimentsRepository;
 import com.otoniel.g6pd.g6pddeficiencyapp.data.repository.AlimentsRepositoryImpl;
 import com.otoniel.g6pd.g6pddeficiencyapp.data.local.LocalAlimentsDataSource;
 import com.otoniel.g6pd.g6pddeficiencyapp.data.remote.RemoteAlimentsDataSource;
@@ -14,7 +15,7 @@ import dagger.Provides;
 public class ApplicationModule {
 
     @Provides
-    AlimentsRepositoryImpl provideRepository() {
+    AlimentsRepository provideRepository() {
         return new AlimentsRepositoryImpl(new LocalAlimentsDataSource(), new RemoteAlimentsDataSource());
     }
 }

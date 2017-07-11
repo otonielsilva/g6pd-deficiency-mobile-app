@@ -61,10 +61,6 @@ public class AlimentsRepositoryImpl implements AlimentsRepository {
     }
 
     private void validateRequiredFields(String photo, String foodName) throws InvalidFormException {
-        if (StringUtil.stringIsNullOrEmpty(photo)) {
-            throw new InvalidFormException(getFieldRequiredMessage("food photo"));
-        }
-
         if (StringUtil.stringIsNullOrEmpty(foodName)) {
             throw new InvalidFormException(getFieldRequiredMessage("food name"));
         }
