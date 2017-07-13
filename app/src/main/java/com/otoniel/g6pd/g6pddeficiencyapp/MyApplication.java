@@ -39,7 +39,9 @@ public class MyApplication extends Application {
     }
 
     private void setupRealm() {
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext()).build();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext())
+                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(realmConfiguration);
     }
 }

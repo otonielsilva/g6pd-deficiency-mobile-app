@@ -105,20 +105,16 @@ public class NewRestrictionFragment extends Fragment implements NewRestrictionCo
 
     @Override
     public void setSelectedImage(Intent data, boolean fromGallery) {
-        try {
-            if (fromGallery) {
-                photoUri = data.getData();
-            }
-            selectedImg.setImageURI(photoUri);
-            selectedImg.setVisibility(View.VISIBLE);
-
-            galleryImg.setEnabled(false);
-            newPhotoImg.setEnabled(false);
-            galleryImg.setImageResource(R.drawable.ic_crop_original_disabled_96dp);
-            newPhotoImg.setImageResource(R.drawable.ic_add_a_photo_disabled_96dp);
-        }  catch (Exception e) {
-            showError(getString(R.string.unexpected_error_message));
+        if (fromGallery) {
+            photoUri = data.getData();
         }
+        selectedImg.setImageURI(photoUri);
+        selectedImg.setVisibility(View.VISIBLE);
+
+        galleryImg.setEnabled(false);
+        newPhotoImg.setEnabled(false);
+        galleryImg.setImageResource(R.drawable.ic_crop_original_disabled_96dp);
+        newPhotoImg.setImageResource(R.drawable.ic_add_a_photo_disabled_96dp);
     }
 
     @Override
@@ -174,52 +170,35 @@ public class NewRestrictionFragment extends Fragment implements NewRestrictionCo
     }
 
     private void setListeners() {
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        saveBtn.setOnClickListener(v -> {
 
-                String aliment = alimentTxt.getText().toString();
-                mPresenter.save(photoUri != null ? photoUri.toString() : null, aliment);
-            }
+            String aliment = alimentTxt.getText().toString();
+            mPresenter.save(photoUri != null ? photoUri.toString() : null, aliment);
         });
 
-        newPhotoImg.setOnClickListener(new View.OnClickListener() {
+        newPhotoImg.setOnClickListener(v -> PermissionsUtil.requestPermissions(getActivity(), new PermissionsUtil.PermissionGranted() {
             @Override
-            public void onClick(View v) {
-                PermissionsUtil.requestPermissions(getActivity(), new PermissionsUtil.PermissionGranted() {
-                    @Override
-                    public void onExecute() {
-                        dispatchTakePictureIntent();
-                    }
-                    @Override
-                    public void onExplanation(String permission) {
-                    }
-                }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            public void onExecute() {
+                dispatchTakePictureIntent();
             }
-        });
-
-        galleryImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                PermissionsUtil.requestPermissions(getActivity(), new PermissionsUtil.PermissionGranted() {
-                    @Override
-                    public void onExecute() {
-                        openGallery();
-                    }
-                    @Override
-                    public void onExplanation(String permission) {
-                    }
-                }, Manifest.permission.READ_EXTERNAL_STORAGE);
-
+            public void onExplanation(String permission) {
             }
-        });
+        }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE));
 
-        selectedImg.setOnLongClickListener(new View.OnLongClickListener() {
+        galleryImg.setOnClickListener(v -> PermissionsUtil.requestPermissions(getActivity(), new PermissionsUtil.PermissionGranted() {
             @Override
-            public boolean onLongClick(View v) {
-                clearPhotoSelection();
-                return true;
+            public void onExecute() {
+                openGallery();
             }
+            @Override
+            public void onExplanation(String permission) {
+            }
+        }, Manifest.permission.READ_EXTERNAL_STORAGE));
+
+        selectedImg.setOnLongClickListener(v -> {
+            clearPhotoSelection();
+            return true;
         });
     }
 }

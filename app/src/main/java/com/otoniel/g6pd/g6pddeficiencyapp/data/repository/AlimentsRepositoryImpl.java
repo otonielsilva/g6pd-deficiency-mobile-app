@@ -6,14 +6,8 @@ import com.otoniel.g6pd.g6pddeficiencyapp.data.model.Aliment;
 import com.otoniel.g6pd.g6pddeficiencyapp.data.remote.RemoteAlimentsDataSource;
 import com.otoniel.g6pd.g6pddeficiencyapp.utils.StringUtil;
 
-import rx.Observable;
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
 import static com.otoniel.g6pd.g6pddeficiencyapp.ApplicationMessages.getFieldRequiredMessage;
+import static com.otoniel.g6pd.g6pddeficiencyapp.ApplicationMessages.getUnexpectedErrorMessage;
 
 /**
  * Created by eltonjhony on 08/07/17.
@@ -29,38 +23,23 @@ public class AlimentsRepositoryImpl implements AlimentsRepository {
     }
 
     @Override
-    public Subscription save(String photo, String foodName, final SaveAlimentsCallback callback)
-            throws InvalidFormException {
+    public void save(String photo, String foodName, final SaveAlimentsCallback callback) {
 
-        validateRequiredFields(photo, foodName);
+        try {
 
-        return localDataSource.save(photo, foodName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends Aliment>>() {
-                    @Override
-                    public Observable<? extends Aliment> call(Throwable throwable) {
-                        return Observable.error(throwable);
-                    }
-                })
-                .subscribe(new Observer<Aliment>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+            this.validateRequiredFields(foodName);
+            this.localDataSource.save(new Aliment(photo, foodName));
+            callback.onSuccess();
 
-                    @Override
-                    public void onError(Throwable e) {
-                        callback.onError(e.getMessage());
-                    }
+        } catch (InvalidFormException e) {
+            callback.onError(e.getMessage());
+        } catch (Exception e) {
+            callback.onError(getUnexpectedErrorMessage());
+        }
 
-                    @Override
-                    public void onNext(Aliment aliment) {
-                        callback.onSuccess();
-                    }
-                });
     }
 
-    private void validateRequiredFields(String photo, String foodName) throws InvalidFormException {
+    private void validateRequiredFields(String foodName) throws InvalidFormException {
         if (StringUtil.stringIsNullOrEmpty(foodName)) {
             throw new InvalidFormException(getFieldRequiredMessage("food name"));
         }

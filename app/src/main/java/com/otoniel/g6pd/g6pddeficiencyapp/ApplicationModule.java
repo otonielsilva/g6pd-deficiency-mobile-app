@@ -15,7 +15,17 @@ import dagger.Provides;
 public class ApplicationModule {
 
     @Provides
-    AlimentsRepository provideRepository() {
-        return new AlimentsRepositoryImpl(new LocalAlimentsDataSource(), new RemoteAlimentsDataSource());
+    AlimentsRepository provideRepository(LocalAlimentsDataSource localDataSource, RemoteAlimentsDataSource remoteDataSource) {
+        return new AlimentsRepositoryImpl(localDataSource, remoteDataSource);
+    }
+
+    @Provides
+    LocalAlimentsDataSource provideLocalAlimentsDataSource() {
+        return new LocalAlimentsDataSource();
+    }
+
+    @Provides
+    RemoteAlimentsDataSource provideRemoteAlimentsDataSource() {
+        return new RemoteAlimentsDataSource();
     }
 }

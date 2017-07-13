@@ -63,12 +63,9 @@ public class MainListingActivity extends BaseActivity {
     }
 
     private void setListeners() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newRestrictionIntent = new Intent(MainListingActivity.this, NewRestrictionActivity.class);
-                MainListingActivity.this.startActivity(newRestrictionIntent);
-            }
+        fab.setOnClickListener(v -> {
+            Intent newRestrictionIntent = new Intent(MainListingActivity.this, NewRestrictionActivity.class);
+            MainListingActivity.this.startActivity(newRestrictionIntent);
         });
     }
 }

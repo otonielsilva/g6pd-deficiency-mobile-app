@@ -15,4 +15,8 @@ public class ApplicationMessages {
     public static String getFieldRequiredMessage(String field) {
         return String.format(getGlobalContext().getString(R.string.field_required_message), field);
     }
+
+    public static String getUnexpectedErrorMessage() {
+        return getGlobalContext().getString(R.string.unexpected_error_message);
+    }
 }
